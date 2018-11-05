@@ -39,11 +39,19 @@ namespace AvidxBDDFramework
             WebUtilities.selectLtbVal(driver, listBxVal, listBxName);
         }
 
-        internal static void navToUtilities(IWebDriver driver, string datevals, string flag)
+        internal static void navToUtilities(IWebDriver driver, string vals, string flag)
         {
             if(flag.Equals("Dates"))
             {
-                WebUtilities.enterDatVal(driver, datevals);
+                WebUtilities.enterDatVal(driver, vals);
+            }
+            if(flag.Equals("PaymentNumber"))
+            {
+                WebUtilities.filterPaymentNumber(driver);
+            }
+            if(flag.Equals("ErrorMessage"))
+            {
+                WebUtilities.validateStatus(driver, vals);
             }
             
         }
@@ -56,7 +64,7 @@ namespace AvidxBDDFramework
             }
             else if (flag.Equals("filename"))
             {
-                ftpFileTransfer.setFilename(ftpval);
+                ftpFileTransfer.setFilename();
             }
             else if(flag.Equals("validate"))
             {

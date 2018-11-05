@@ -98,6 +98,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
@@ -163,6 +164,7 @@
     <Compile Include="Utilities\BrowserManager.cs" />
     <Compile Include="Utilities\DBConnection.cs" />
     <Compile Include="Utilities\FTPFileConnection.cs" />
+    <Compile Include="Utilities\GenerateTxtFile.cs" />
     <Compile Include="Utilities\WebUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -192,7 +194,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Reports\logo.png" />
-    <Content Include="Resources\FTPFile\AVDC_BAIPD_102.txt" />
+    <Content Include="Resources\FTPFileGenerated\AVDC_BAIPD_Generated.txt" />
+    <Content Include="Resources\FTPFileTemplate\AVDC_BAIPD.txt" />
+    <Content Include="Resources\PaymentID.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reports\Testresults\" />

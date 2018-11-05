@@ -68,17 +68,19 @@ namespace AvidxBDDFramework.Features
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Uploading BAI2 file to FTP location")]
         [NUnit.Framework.CategoryAttribute("ftp")]
+        [NUnit.Framework.CategoryAttribute("GenerateBAI2file")]
         public virtual void UploadingBAI2FileToFTPLocation()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Uploading BAI2 file to FTP location", new string[] {
-                        "ftp"});
+                        "ftp",
+                        "GenerateBAI2file"});
 #line 4
 this.ScenarioSetup(scenarioInfo);
 #line 5
  testRunner.Given("FTP folder location \"//sftp.avidxchange.com/Avidpaytest/Integration/FIFTHTHIRD/BA" +
                     "I2_AZRFSWDVS02\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 6
- testRunner.When("I upload the file \"AVDC_BAIPD_102\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I upload the generated BAI2 file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 7
  testRunner.Then("upload file in the FTP location should be successful", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -99,9 +101,13 @@ this.ScenarioSetup(scenarioInfo);
 #line 12
  testRunner.And("I navigate to \"Manage Payments\" page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
- testRunner.And("I select the customer \"Ackerman & Cos.\" from \"customer\" listbox", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I select the \"customer\" from the customer listbox", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
  testRunner.And("I enter \"02/01/2018,10/31/2018\" in the date feilds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 15
+ testRunner.When("I filter the result with the payment number", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 16
+ testRunner.Then("I should see the status of payment number is \"e-Payment Check Cleared\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

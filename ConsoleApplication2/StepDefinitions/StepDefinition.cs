@@ -27,16 +27,28 @@ namespace AvidxBDDFramework
             NavigationToUtilities.navToPage(driver, strPageName);
         }
 
-        [Given(@"I select the customer ""(.*)"" from ""(.*)"" listbox")]
-        public void GivenISelectTheCustomerFromCustomerListbox(string listBxVal, string listBxName)
+        [Given(@"I select the ""(.*)"" from the customer listbox")]
+        public void GivenISelectTheCustomerFromCustomerListbox(string listBxName)
         {
-            NavigationToUtilities.navToObjUtilities(driver, listBxVal, listBxName);
+            NavigationToUtilities.navToObjUtilities(driver,"", listBxName);
         }
 
         [Given(@"I enter ""(.*)"" in the date feilds")]
         public void GivenIEnterInDateFeilds(string dateVals)
         {
             NavigationToUtilities.navToUtilities(driver, dateVals,"Dates");
+        }
+
+        [When(@"I filter the result with the payment number")]
+        public void WhenIFilterTheResultWithThePaymentNumber()
+        {
+            NavigationToUtilities.navToUtilities(driver, "", "PaymentNumber");
+        }
+
+        [Then(@"I should see the status of payment number is ""(.*)""")]
+        public void ThenIShouldSeeTheStatusOfPaymentNumberIs(string errormsg)
+        {
+            NavigationToUtilities.navToUtilities(driver, errormsg, "ErrorMessage");
         }
 
 
@@ -46,14 +58,13 @@ namespace AvidxBDDFramework
         [Given(@"FTP folder location ""(.*)""")]
         public void GivenFTPFolderLocation(string ftpPath)
         {
-            DBConnection.sqlConnect();
-            //NavigationToUtilities.navToFTPUtilities(ftpPath, "ftpPath");
+            NavigationToUtilities.navToFTPUtilities(ftpPath, "ftpPath");
         }
 
-        [When(@"I upload the file ""(.*)""")]
-        public void WhenIUploadTheFile(string fileName)
+        [When(@"I upload the generated BAI2 file")]
+        public void WhenIUploadTheGeneratedFile()
         {
-            NavigationToUtilities.navToFTPUtilities(fileName, "filename");
+            NavigationToUtilities.navToFTPUtilities("", "filename");
         }
 
         [Then(@"upload file in the FTP location should be successful")]

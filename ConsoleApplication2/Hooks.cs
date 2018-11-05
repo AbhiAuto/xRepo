@@ -41,7 +41,16 @@ namespace SpecflowParallelTest
             driver = BrowserManager.GetBrowserDriver();
         }
 
-        
+
+        [BeforeScenario]
+        [Scope(Tag = "GenerateBAI2file")]
+        public static void GenerateBAI2file()
+        {
+            Console.WriteLine("---------------------Generating BAI2 file---------------------");
+            GenerateTxtFile.generateBAI2file();
+            Console.WriteLine("------------------Successfully generated BAI2 file--------------");
+        }
+
         [BeforeTestRun]
         public static void InitializeReport()
         {

@@ -15,7 +15,7 @@ namespace AvidxBDDFramework.Utilities
             try
             {
                 //Path where test file stored
-                string sourcePath = dirPath + @"\Resources\FTPFile\";
+                string sourcePath = dirPath + @"\Resources\FTPFileGenerated\";
                 var fileName = filename + ".txt";
 
                 // Use Path class to manipulate file and directory paths.
@@ -50,9 +50,9 @@ namespace AvidxBDDFramework.Utilities
         {
             FTPPath = ftpPath;
         }
-        internal static void setFilename(string ftpval)
+        internal static void setFilename()
         {
-            filename = ftpval;
+            filename = GenerateTxtFile.filenameGen;
             UploadFileToFtp();
         }
 
