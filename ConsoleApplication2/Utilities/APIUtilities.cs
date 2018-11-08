@@ -16,11 +16,15 @@ namespace AvidxBDDFramework.Utilities
     class APIUtilities
     {
         public static string strAPIUrl;
+        public static string reqString;
+        public static JArray jsonResArray;
         public static string strGetReqParms;
         public static string dirPath = WebUtilities.getDirPath();
         public static HttpResponseMessage strResponse;
-        private static string strToken;
-        public static string strReponseCont;
+        public static HttpStatusCode statuscode;
+        public static int statusCode;
+        public static HttpWebResponse response;
+        public static Stream dataStream;
 
         internal static string getRequestURL(string strParam)
         {
@@ -46,95 +50,138 @@ namespace AvidxBDDFramework.Utilities
         {
             public string Name { get; set; }
         }
-        internal static void getReqRes(string strParam)
+        
+
+        private static void post(string jsonData)
         {
-            string strURL = strAPIUrl;
-            strGetReqParms = "?" + strGetReqParms;
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(strURL);
-
-            // Add an Accept header for JSON format.
-            client.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue("application/json"));
-            strToken = getAuthToken();
-            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + strToken);
-
-            // List data response.
-            strResponse = client.GetAsync(strGetReqParms).Result;
-            //Dispose once all HttpClient calls are complete. This is not necessary if the containing object will be disposed of; for example in this case the HttpClient instance will be disposed automatically when the application terminates so the following call is superfluous.
-            client.Dispose();
-            string strStatusCode = strResponse.StatusCode.ToString();
-            strReponseCont = strResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            if (strStatusCode != "OK")
+            try
             {
-                Assert.Fail("Find the reponse from the API as below" + strStatusCode + strReponseCont);
+                // Create a request using a URL that can receive a post.   
+                HttpWebRequest request =(HttpWebRequest)WebRequest.Create(strAPIUrl);
+                // Set the Method property of the request to POST.  
+                request.Method = "POST";
+                // Create POST data and convert it to a byte array.  
+                byte[] byteArray = Encoding.UTF8.GetBytes(jsonData);
+                // Set the ContentType property of the WebRequest.  
+                request.ContentType = "application/json";
+                // Set the ContentLength property of the WebRequest.  
+                request.ContentLength = byteArray.Length;
+
+                string username = WebUtilities.fetchParamValFromConfig("username");
+                string password = WebUtilities.fetchParamValFromConfig("password");
+                string dePassword = WebUtilities.decryptString(password);
+                CredentialCache credcache = new CredentialCache();
+                credcache.Add(new Uri(strAPIUrl), "NTLM", new NetworkCredential(username, dePassword));
+                request.Credentials = credcache;
+
+                // Get the request stream.  
+                dataStream = request.GetRequestStream();
+                // Write the data to the request stream.  
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                // Close the Stream object.  
+                dataStream.Close();
+                // Get the response.  
+                response = (HttpWebResponse)request.GetResponse();
+                // Display the status.  
+                Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+                statuscode = ((HttpWebResponse)response).StatusCode;
+                statusCode = (int)statuscode;
+
+                // Get the stream containing content returned by the server.  
+                dataStream = response.GetResponseStream();
+                // Open the stream using a StreamReader for easy access.  
+                StreamReader reader = new StreamReader(dataStream);
+                // Read the content.  
+                string responseFromServer = reader.ReadToEnd();
+                // Display the content.  
+                Console.WriteLine(responseFromServer);
+                // Clean up the streams.  
+                reader.Close();
+                dataStream.Close();
+                response.Close();
+
+                jsonResArray = JArray.Parse(responseFromServer);
+            }
+            catch(WebException webEx)
+            {
+                try
+                {
+                    if (webEx.Response != null)
+                    {
+                        response = (HttpWebResponse)webEx.Response;
+                        statuscode = ((HttpWebResponse)response).StatusCode;
+                        statusCode = (int)statuscode;
+
+                        // Get the stream containing content returned by the server.  
+                        dataStream = response.GetResponseStream();
+                        // Open the stream using a StreamReader for easy access.  
+                        StreamReader reader = new StreamReader(dataStream);
+                        // Read the content.  
+                        string responseFromServer = reader.ReadToEnd();
+                        // Display the content.  
+                        Console.WriteLine(responseFromServer);
+                        // Clean up the streams.  
+                        reader.Close();
+                        dataStream.Close();
+                        response.Close();
+
+                        jsonResArray = JArray.Parse(responseFromServer);
+                    }
+                }catch(Exception e)
+                {
+                    Assert.Fail("Failed to send the Post request" + e);
+                }  
             }
 
         }
 
-        private static string getAuthToken()
+        internal static void createJsonRequest(string paymentNo, string amount)
         {
-            // Create a request using a URL that can receive a post.   
-            WebRequest request = WebRequest.Create("URL");
-            // Set the Method property of the request to POST.  
-            request.Method = "POST";
-            // Create POST data and convert it to a byte array.  
-            string postData = "data";
-            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-            // Set the ContentType property of the WebRequest.  
-            request.ContentType = "application/x-www-form-urlencoded";
-            // Set the ContentLength property of the WebRequest.  
-            request.ContentLength = byteArray.Length;
-            // Get the request stream.  
-            Stream dataStream = request.GetRequestStream();
-            // Write the data to the request stream.  
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            // Close the Stream object.  
-            dataStream.Close();
-            // Get the response.  
-            WebResponse response = request.GetResponse();
-            // Display the status.  
-            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-            // Get the stream containing content returned by the server.  
-            dataStream = response.GetResponseStream();
-            // Open the stream using a StreamReader for easy access.  
-            StreamReader reader = new StreamReader(dataStream);
-            // Read the content.  
-            string responseFromServer = reader.ReadToEnd();
-            // Display the content.  
-            Console.WriteLine(responseFromServer);
-            // Clean up the streams.  
-            reader.Close();
-            dataStream.Close();
-            response.Close();
+            string sqlQueryString = "SELECT PaymentID FROM [AvidPayTransaction].[trn].[tPayment]  where ONSTnumber in ("+ paymentNo + ");";
+            string paymentID = DBConnection.sqlConnect(sqlQueryString);
 
-            JObject jsonObj = JObject.Parse(responseFromServer);
-            string strToken = (string)jsonObj["access_token"];
-            return strToken;
+            sqlQueryString = "SELECT ppi.PaymentProcessingStatusTypeID from AvidPayTransaction.trn.tPayment p"
+                        + " inner join AvidPayTransaction.trn.tPaymentProcessingItem ppi on p.PaymentID = ppi.PaymentID"
+                        + " inner join AvidPayTransaction.pfl.tUser u on u.UserID = p.UserID"
+                        + " inner join AvidPayTransaction.pfl.tOrganization o on o.OrganizationID = u.OrganizationID"
+                        + " where p.PaymentID in (" + paymentID + ");";
+            string val = DBConnection.sqlConnect(sqlQueryString);
+            if (val.Equals("14"))
+            {
+                sqlQueryString = "update [AvidPayTransaction].[trn].tPaymentProcessingItem set PaymentProcessingStatusTypeID = 27 where PaymentID in ("+ paymentID + ");";
+            }
+
+            reqString = "{\"" + paymentNo + "\":" + amount + "}";
         }
+
+        internal static void sendPostRequest()
+        {
+            post(reqString);
+        }
+
+        internal static void fetchsetCustPayDt()
+        {
+            reqString = GenerateTxtFile.Fetchdetailsfromdb();
+        }
+
         public static void fetchValFromResAndVal(Table strTableData)
         {
-            JArray jsonArr = JArray.Parse(strReponseCont);
+            string strActRespVal = (string)jsonResArray[0][1];
+            //Assert.Fail("The expected value is : " + strRowVal + " The actual is : " + strActRespVal);
+            
+        }
 
-            TableRows tblRows = strTableData.Rows;
-            List<TableRow> tblCells = tblRows.ToList();
-            ICollection<string> strHeader = strTableData.Header;
-            string[] colHeader = strHeader.ToArray();
-            int strCountCol = colHeader.Length;
-            int strCountRow = tblRows.Count;
-
-            for (int i = 0; i < strCountRow; i++)
+        public static void setApiUrl(string apiName)
+        {
+            strAPIUrl = ConfigurationManager.AppSettings[apiName];
+            if(strAPIUrl!=null)
             {
-                for (int j = 0; j < strCountCol; j++)
-                {
-                    string strColVal = colHeader[j];
-                    string strRowVal = tblRows[i][strColVal];
-                    string strActRespVal = (string)jsonArr[i][strColVal];
-                    if (!strRowVal.Equals(strActRespVal))
-                    {
-                        Assert.Fail("The expected value is : " + strRowVal + " The actual is : " + strActRespVal);
-                    }
-                }
+                Console.WriteLine("Successfully fetched the API Url");
+                Console.WriteLine("API Url is : " + strAPIUrl);
+            }
+            else
+            {
+                Assert.Fail("Failed to fetch the Url");
             }
         }
     }

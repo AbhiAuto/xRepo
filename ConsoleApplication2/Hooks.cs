@@ -11,6 +11,7 @@ using TechTalk.SpecFlow.Tracing;
 using System.IO;
 using AvidxBDDFramework.Utilities;
 using AvidxBDDFramework;
+using System.Threading;
 
 namespace SpecflowParallelTest
 {
@@ -49,6 +50,13 @@ namespace SpecflowParallelTest
             Console.WriteLine("---------------------Generating BAI2 file---------------------");
             GenerateTxtFile.generateBAI2file();
             Console.WriteLine("------------------Successfully generated BAI2 file--------------");
+        }
+
+        [BeforeScenario]
+        [Scope(Tag = "Wait")]
+        public static void wait()
+        {
+            Thread.Sleep(60000);
         }
 
         [BeforeTestRun]

@@ -145,10 +145,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Features\TestScenario.feature.cs">
-      <DependentUpon>TestScenario.feature</DependentUpon>
+    <Compile Include="Features\TC02_ValidatingUIScreen-API.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>TC02_ValidatingUIScreen-API.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\TC01_ValidatingUIScreen-Genfile.feature.cs">
+      <DependentUpon>TC01_ValidatingUIScreen-Genfile.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Features\TC03_ValidatingAPIFunctionalities.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TC03_ValidatingAPIFunctionalities.feature</DependentUpon>
     </Compile>
     <Compile Include="Hooks.cs" />
     <Compile Include="Output.Designer.cs">
@@ -171,9 +181,17 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Features\TestScenario.feature">
+    <None Include="Features\TC02_ValidatingUIScreen-API.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>TestScenario.feature.cs</LastGenOutput>
+      <LastGenOutput>TC02_ValidatingUIScreen-API.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\TC01_ValidatingUIScreen-Genfile.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>TC01_ValidatingUIScreen-Genfile.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\TC03_ValidatingAPIFunctionalities.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>TC03_ValidatingAPIFunctionalities.feature.cs</LastGenOutput>
     </None>
     <None Include="license" />
     <None Include="Output.runsettings">
@@ -195,8 +213,9 @@
     </Content>
     <Content Include="Reports\logo.png" />
     <Content Include="Resources\FTPFileGenerated\AVDC_BAIPD_Generated.txt" />
-    <Content Include="Resources\FTPFileTemplate\AVDC_BAIPD.txt" />
+    <Content Include="Resources\FTPFileTemplate\BAI2_Avid_Template.txt" />
     <Content Include="Resources\PaymentID.txt" />
+    <Content Include="Resources\jsonTemp.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reports\Testresults\" />

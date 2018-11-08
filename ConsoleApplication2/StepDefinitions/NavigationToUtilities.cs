@@ -5,6 +5,7 @@ using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using System.Collections.Generic;
 using AvidxBDDFramework.Utilities;
+using System.Net;
 
 namespace AvidxBDDFramework
 {
@@ -49,7 +50,7 @@ namespace AvidxBDDFramework
             {
                 WebUtilities.filterPaymentNumber(driver);
             }
-            if(flag.Equals("ErrorMessage"))
+            if(flag.Equals("Status"))
             {
                 WebUtilities.validateStatus(driver, vals);
             }
@@ -81,13 +82,53 @@ namespace AvidxBDDFramework
             }
          }
 
+        internal static void setUrl(string apiName)
+        {
+            APIUtilities.setApiUrl(apiName);
+        }
+
+        internal static void fetchCustPayDt()
+        {
+            APIUtilities.fetchsetCustPayDt();
+        }
+
+        internal static void sendRequest(string request)
+        {
+            if(request.Equals("Post"))
+            {
+                APIUtilities.sendPostRequest();
+            }
+        }
+
+        internal static void respCode(int resCode)
+        {
+            int statusCode = APIUtilities.statusCode;
+            if (statusCode != resCode)
+            {
+                Assert.Fail("Stattus code is : " + resCode + ". Please find the errror details :"+ APIUtilities.jsonResArray.ToString());
+            }
+        }
+
+        internal static void createRequest(string paymentNo, string amount)
+        {
+            APIUtilities.createJsonRequest(paymentNo,amount);
+        }
+
         internal static void NavToScreen(IWebDriver driver, string screenName)
         {
-            if(screenName.Equals("my personal information"))
+            try
             {
-                driver.FindElement(By.XPath("//a[@title='Information']")).Click();
-                System.Threading.Thread.Sleep(5000);
+                if(screenName.Equals("my personal information"))
+                {
+                    driver.FindElement(By.XPath("//a[@title='Information']")).Click();
+                    System.Threading.Thread.Sleep(5000);
+                }
             }
+            catch(Exception e)
+            {
+                Assert.Fail("Failed to click on my personal information link, please find the screenshot for more details " + e);
+            }
+
         }
 
     }

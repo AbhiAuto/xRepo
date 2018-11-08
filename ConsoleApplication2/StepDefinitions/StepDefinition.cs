@@ -46,9 +46,9 @@ namespace AvidxBDDFramework
         }
 
         [Then(@"I should see the status of payment number is ""(.*)""")]
-        public void ThenIShouldSeeTheStatusOfPaymentNumberIs(string errormsg)
+        public void ThenIShouldSeeTheStatusOfPaymentNumberIs(string status)
         {
-            NavigationToUtilities.navToUtilities(driver, errormsg, "ErrorMessage");
+            NavigationToUtilities.navToUtilities(driver, status, "Status");
         }
 
 
@@ -71,6 +71,39 @@ namespace AvidxBDDFramework
         public void ThenUploadFileInTheFTPLocationShouldBeSuccessful()
         {
             NavigationToUtilities.navToFTPUtilities("", "Validate");
+        }
+
+        //Step defs for Rest Api
+
+        [Given(@"I have ""(.*)"" api")]
+        public void GivenIHaveApi(string apiName)
+        {
+            NavigationToUtilities.setUrl(apiName);
+        }
+
+        [Given(@"I have request json with payment number and amount")]
+        public void GivenIHaveJsonWithAnd()
+        {
+            NavigationToUtilities.fetchCustPayDt();
+        }
+
+        [When(@"I send a ""(.*)"" request")]
+        public void WhenISendARequest(string request)
+        {
+            NavigationToUtilities.sendRequest(request);
+        }
+
+        [Then(@"the response should be ""(.*)""")]
+        public void ThenTheResponseShouldBe(int resCode)
+        {
+            NavigationToUtilities.respCode(resCode);
+        }
+
+       
+        [Given(@"I have request json with invalid '(.*)' and '(.*)'")]
+        public void GivenIHaveRequestJsonWithInvalidAnd(string paymentNo, string amount)
+        {
+            NavigationToUtilities.createRequest(paymentNo, amount);
         }
 
     }
