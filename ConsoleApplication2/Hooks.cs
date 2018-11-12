@@ -52,13 +52,7 @@ namespace SpecflowParallelTest
             Console.WriteLine("------------------Successfully generated BAI2 file--------------");
         }
 
-        [BeforeScenario]
-        [Scope(Tag = "Wait")]
-        public static void wait()
-        {
-            Thread.Sleep(60000);
-        }
-
+       
         [BeforeTestRun]
         public static void InitializeReport()
         {
@@ -81,7 +75,7 @@ namespace SpecflowParallelTest
         [Scope(Tag = "Web")]
         public static void TearDownBrowser()
         {
-            //driver  = BrowserManager.tearDownAllBrowserSession(driver);
+            driver  = BrowserManager.tearDownAllBrowserSession(driver);
         }
 
         [AfterTestRun]
@@ -99,6 +93,13 @@ namespace SpecflowParallelTest
         {
             //Create dynamic feature name
             featureName = extent.CreateTest<Feature>(FeatureContext.Current.FeatureInfo.Title);
+            DBConnection.updateDb();
+        }
+
+        [AfterFeature]
+        public static void updateTable()
+        {
+            DBConnection.updateDb();
         }
 
         [AfterStep]
@@ -138,6 +139,7 @@ namespace SpecflowParallelTest
                 if (driver != null)
                 {
                     TakeScreenshot(driver);
+                    driver.Quit();
                 }
             }
 

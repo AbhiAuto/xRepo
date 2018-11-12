@@ -15,10 +15,12 @@ namespace AvidxBDDFramework.Utilities
         public static string customerName;
         public static string checkNo;
         public static string netInvoice;
-        public static bool flag;
+        public static bool flag = false;
         public static string filenameGen;
+        public static string paymentID;
         internal static void generateBAI2file()
         {
+            flag = false;
             string[] textLines = System.IO.File.ReadAllLines(dirPath + @"\Resources\PaymentID.txt");
             int i = textLines.Count();
             for(int j=0;j<=i; j++)
@@ -51,6 +53,7 @@ namespace AvidxBDDFramework.Utilities
                     string[] splitStr = netInvoice.Split('.');
                     netInvoice = splitStr[0] + splitStr[1];
                     flag = true;
+                    paymentID = textLines[j];
                 }
                 if (flag)
                 {
@@ -76,6 +79,7 @@ namespace AvidxBDDFramework.Utilities
         }
         internal static string Fetchdetailsfromdb()
         {
+            flag = false;
             string[] textLines = System.IO.File.ReadAllLines(dirPath + @"\Resources\PaymentID.txt");
             int i = textLines.Count();
             for (int j = 0; j <= i; j++)
@@ -106,10 +110,11 @@ namespace AvidxBDDFramework.Utilities
                     netInvoice = DBConnection.sqlConnect(sqlQuery);
                     netInvoice = netInvoice.Remove(netInvoice.Length - 2);
                     flag = true;
+                    paymentID = textLines[j];
                 }
                 if (flag)
                 {
-                    break;
+                    break; 
                 }
             }
             if (!flag)

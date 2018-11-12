@@ -18,9 +18,9 @@ namespace AvidxBDDFramework.Utilities
         public static string strAPIUrl;
         public static string reqString;
         public static JArray jsonResArray;
+        public static JObject jsonResObject;
         public static string strGetReqParms;
         public static string dirPath = WebUtilities.getDirPath();
-        public static HttpResponseMessage strResponse;
         public static HttpStatusCode statuscode;
         public static int statusCode;
         public static HttpWebResponse response;
@@ -125,7 +125,14 @@ namespace AvidxBDDFramework.Utilities
                         dataStream.Close();
                         response.Close();
 
-                        jsonResArray = JArray.Parse(responseFromServer);
+                        if (statusCode == 200 || statusCode == 400)
+                        {
+                            jsonResArray = JArray.Parse(responseFromServer);
+                        }
+                        else
+                        {
+                            jsonResObject = JObject.Parse(responseFromServer);
+                        }
                     }
                 }catch(Exception e)
                 {
@@ -133,6 +140,45 @@ namespace AvidxBDDFramework.Utilities
                 }  
             }
 
+        }
+
+        internal static void fetchValFromJsonResp(string jsonKey, string exkeyVal)
+        {
+            try
+            {
+                if (jsonKey.Contains("["))
+                {
+                    string[] splitjsonKey = jsonKey.Split('.');
+                    string jsonArrName = splitjsonKey[0];
+                    jsonArrName = jsonArrName.Replace("[0]",""); 
+                    string jsonKeyName = splitjsonKey[1];
+                    JToken jToken = jsonResArray.Children()[jsonArrName].First();
+                    JArray jArray = JArray.Parse(jToken.ToString());
+                    foreach (JObject obj in jArray.Children<JObject>())
+                    {
+                        foreach (JProperty prop in obj.Properties())
+                        {
+                            string key = prop.Name;
+                            if (key.Equals(jsonKeyName))
+                            {
+                                string actkeyValue = prop.Value.ToString();
+                                if (!actkeyValue.Equals(exkeyVal))
+                                {
+                                    Assert.Fail("Expected: " + exkeyVal + ", actual is : " + actkeyValue);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Succesfully fetched the value from reponse");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                Assert.Fail("Failed to fetch the value from response: " + e);
+            }
         }
 
         internal static void createJsonRequest(string paymentNo, string amount)

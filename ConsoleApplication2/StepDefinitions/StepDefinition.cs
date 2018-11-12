@@ -51,6 +51,14 @@ namespace AvidxBDDFramework
             NavigationToUtilities.navToUtilities(driver, status, "Status");
         }
 
+        [When(@"the user waits for ""(.*)"" seconds")]
+        public void WhenTheUserWaitsForSeconds(int secs)
+        {
+            NavigationToUtilities.waitForSecs(secs);
+        }
+
+       
+
 
 
         //Step defs for FTP file copy
@@ -73,6 +81,13 @@ namespace AvidxBDDFramework
             NavigationToUtilities.navToFTPUtilities("", "Validate");
         }
 
+        [Then(@"the generated file extension should change to ""(.*)""")]
+        public void ThenTheGeneratedFileExtensionShouldChangeTo(string fileExt)
+        {
+            NavigationToUtilities.navToFTPUtilities(fileExt,"validateFileExt");
+        }
+
+       
         //Step defs for Rest Api
 
         [Given(@"I have ""(.*)"" api")]
@@ -99,13 +114,64 @@ namespace AvidxBDDFramework
             NavigationToUtilities.respCode(resCode);
         }
 
-       
-        [Given(@"I have request json with invalid '(.*)' and '(.*)'")]
+        [Given(@"I have request json with valid '(.*)' and used '(.*)'")]
+        [Given(@"I have request json with e-Payment Check Cleared '(.*)' and '(.*)'")]
         public void GivenIHaveRequestJsonWithInvalidAnd(string paymentNo, string amount)
         {
             NavigationToUtilities.createRequest(paymentNo, amount);
         }
 
+       
+        [Then(@"the reponse ""(.*)"" should contain ""(.*)""")]
+        public void ThenTheReponseShouldContain(string jsonKey, string keyVal)
+        {
+            NavigationToUtilities.fetchValFromResp(jsonKey, keyVal);
+        }
+
+
+
+        //StepDef for Database validations
+        [Given(@"I have AvidPayTransaction database")]
+        public void GivenIHaveAvidPayTransactionDatabase()
+        {
+            NavigationToUtilities.navToDbConnection("","openDbCon");
+        }
+
+        [When(@"I query for ""(.*)"" status")]
+        public void WhenIQueryForPaymentProcessingStatusTypeIDStatus(string queryFor)
+        {
+            NavigationToUtilities.navToDbConnection(queryFor, "genQuery");
+        }
+
+        [Then(@"I should see the status as ""(.*)""")]
+        public void ThenIShouldSeeTheStatusAs(string status)
+        {
+            NavigationToUtilities.navToDbConnection(status, "status");
+        }
+
+
+        //StepDef for windows services
+        [Given(@"I have list of Windows services")]
+        public void GivenIHaveListOfWindowsServices()
+        {
+            NavigationToUtilities.navToWindowsUtilities("", "listofservices");
+        }
+
+        [When(@"I check for the status of ""(.*)"" and ""(.*)""")]
+        public void WhenICheckForTheStatusOfAnd(string serviceNameOne, string serviceNameTwo)
+        {
+            string conServicename = serviceNameOne + ":" + serviceNameTwo;
+            NavigationToUtilities.navToWindowsUtilities(conServicename, "servicenames");
+        }
+
+        [Then(@"the status should be ""(.*)""")]
+        public void ThenTheStatusShouldBe(string serviceStatus)
+        {
+            NavigationToUtilities.navToWindowsUtilities(serviceStatus, "servicestatus");
+        }
+
+
     }
+
 
 }

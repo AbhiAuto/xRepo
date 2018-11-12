@@ -1,5 +1,10 @@
 ﻿using NUnit.Framework;
+using Renci.SshNet;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
 
 namespace AvidxBDDFramework.Utilities
 {
@@ -14,6 +19,7 @@ namespace AvidxBDDFramework.Utilities
         {
             try
             {
+                Console.WriteLine("---Uploading File---");
                 //Path where test file stored
                 string sourcePath = dirPath + @"\Resources\FTPFileGenerated\";
                 var fileName = filename + ".txt";
@@ -22,25 +28,54 @@ namespace AvidxBDDFramework.Utilities
                 string sourceFile = System.IO.Path.Combine(sourcePath, fileName);
                 destFile = System.IO.Path.Combine(FTPPath, fileName);
 
-                // To copy a folder's contents to a new location:
-                // Create a new target folder, if necessary.
-                if (!System.IO.Directory.Exists(FTPPath))
+                //FileStream for holding the file
+                FileStream fStream = new FileStream(destFile, FileMode.Create);
+
+                //connect to the server
+                FileWebRequest fileRequest = (FileWebRequest)FtpWebRequest.Create(new Uri(sourceFile));
+
+                //set the protocol for the request
+                fileRequest.Method = WebRequestMethods.Ftp.DownloadFile;
+
+                string username = WebUtilities.fetchParamValFromConfig("username");
+                string password = WebUtilities.fetchParamValFromConfig("password");
+                string dePassword = WebUtilities.decryptString(password);
+
+                //provide username and password                
+                fileRequest.Credentials = new NetworkCredential(username, dePassword);
+
+                //get the servers response
+                WebResponse response = fileRequest.GetResponse();
+
+                //retrieve the response stream
+                Stream stream = response.GetResponseStream();
+
+                //create byte buffer
+                byte[] buffer = new byte[1024];
+                long size = 0;
+
+                //determine how much has been read
+                int totalRead = stream.Read(buffer, 0, buffer.Length);
+
+                //loop through the total size of the file
+                while (totalRead > 0)
                 {
-                    Assert.Fail("Invalid FTP folder location : " + FTPPath);
+                    size += totalRead;
+
+                    //write to the stream
+                    fStream.Write(buffer, 0, totalRead);
+
+                    //get remaining size
+                    totalRead = stream.Read(buffer, 0, 1024);
                 }
 
-                // To copy a file to another location and 
-                // overwrite the destination file if it already exists.
-                System.IO.File.Copy(sourceFile, destFile, true);
-                if (System.IO.File.Exists(destFile))
-                {
-                    fileExistsInFTPflag = true;
-                }
-                else
-                {
-                    Assert.Fail("File upload to FTP location is not successful");
-                }
-            }catch(Exception e)
+                // Close the streams.
+                fStream.Close();
+                stream.Close();
+                fileExistsInFTPflag = true;
+
+            }
+            catch(Exception e)
             {
                Assert.Fail("File is not successfully uploaded into FTP folder location: "+e);
             }
@@ -61,6 +96,25 @@ namespace AvidxBDDFramework.Utilities
             if(fileExistsInFTPflag==true)
             {
                 Console.WriteLine("File has uploaded to the FTP location location successfully");
+            }
+        }
+
+        internal static void validateFileExt(string ftpval)
+        {
+            bool flag = false;
+            string[] loadedfiles = Directory.GetFiles(FTPPath, "*.loaded").Select(Path.GetFileName).ToArray();
+            for(int i =0;i<loadedfiles.Length;i++)
+            {
+                if(loadedfiles[i].Contains(filename))
+                {
+                    Console.WriteLine("File successfully loaded by RabbitMQ Queue");
+                    flag = true;
+                    break;
+                }
+            }
+            if(!flag)
+            {
+                Assert.Fail("File not successfully loaded by RabbitMQ Queue");
             }
         }
     }

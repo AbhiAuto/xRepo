@@ -7,8 +7,13 @@ Scenario: 01-Validating ClearStdCheck API when the payment status is 14
 	When I send a "Post" request
 	Then the response should be "200"
 
+Scenario: 02-Validating database status change to 27
+	Given I have AvidPayTransaction database
+	When  I query for "PaymentProcessingStatusTypeID" status
+	Then I should see the status as "27"
+
 @Web
-Scenario: 02-Validating check status on AvidPay Internal portal
+Scenario: 03-Validating check status on AvidPay Internal portal
 	Given I have logged into "AvidPay Internal" portal
 	And I navigate to "Manage Payments" page 
 	And I select the "customer" from the customer listbox

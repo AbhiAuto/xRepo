@@ -6,13 +6,12 @@ using TechTalk.SpecFlow.Assist;
 using System.Collections.Generic;
 using AvidxBDDFramework.Utilities;
 using System.Net;
+using System.Threading;
 
 namespace AvidxBDDFramework
 {
     class NavigationToUtilities
     {
-        private static ICollection<string> str;
-
         internal static void LauchUrl(IWebDriver driver, string strAppName)
         {
             try
@@ -57,6 +56,12 @@ namespace AvidxBDDFramework
             
         }
 
+        internal static void waitForSecs(int secs)
+        {
+           int totalSecs = secs * 1000;
+           Thread.Sleep(totalSecs);
+        }
+
         internal static void navToFTPUtilities(string ftpval, string flag)
         {
             if (flag.Equals("ftpPath"))
@@ -71,7 +76,13 @@ namespace AvidxBDDFramework
             {
                 ftpFileTransfer.valUpload(ftpval);
             }
+            else if(flag.Equals("validateFileExt"))
+            {
+                ftpFileTransfer.validateFileExt(ftpval);
+            }
         }
+
+       
 
         internal static void navToPage(IWebDriver driver, string strPageName)
         {
@@ -105,13 +116,18 @@ namespace AvidxBDDFramework
             int statusCode = APIUtilities.statusCode;
             if (statusCode != resCode)
             {
-                Assert.Fail("Stattus code is : " + resCode + ". Please find the errror details :"+ APIUtilities.jsonResArray.ToString());
+                Assert.Fail("Status code is : " + resCode + ". Please find the errror details :"+ APIUtilities.jsonResArray.ToString());
             }
         }
 
         internal static void createRequest(string paymentNo, string amount)
         {
             APIUtilities.createJsonRequest(paymentNo,amount);
+        }
+
+        internal static void fetchValFromResp(string jsonKey, string keyVal)
+        {
+            APIUtilities.fetchValFromJsonResp(jsonKey, keyVal);
         }
 
         internal static void NavToScreen(IWebDriver driver, string screenName)
@@ -131,5 +147,36 @@ namespace AvidxBDDFramework
 
         }
 
+        internal static void navToDbConnection(string param, string flag)
+        {
+            if (flag.Equals("openDbCon"))
+            {
+                DBConnection.openDbCon();
+            }
+            if(flag.Equals("genQuery"))
+            {
+                DBConnection.genQuery(param);
+            }
+            if (flag.Equals("status"))
+            {
+                DBConnection.fetchStatus(param);
+            }
+        }
+
+        internal static void navToWindowsUtilities(string val, string flag)
+        {
+            if(flag.Equals("listofservices"))
+            {
+                WindowsUtilities.getListOfWindowsServices();
+            }
+            else if(flag.Equals("servicenames"))
+            {
+                WindowsUtilities.setserviceNames(val);
+            }
+            else if (flag.Equals("servicestatus"))
+            {
+                WindowsUtilities.validateServiceStatus(val);
+            }
+        }
     }
 }
