@@ -134,6 +134,8 @@ E:\xAutomation\framework\bin\Debug\Newtonsoft.Json.dll
 E:\xAutomation\framework\bin\Debug\nunit.framework.dll
 E:\xAutomation\framework\bin\Debug\RazorEngine.dll
 E:\xAutomation\framework\bin\Debug\Renci.SshNet.dll
+E:\xAutomation\framework\bin\Debug\SeleniumExtras.PageObjects.dll
+E:\xAutomation\framework\bin\Debug\SeleniumExtras.WaitHelpers.dll
 E:\xAutomation\framework\bin\Debug\SpecFlow.Assist.Dynamic.dll
 E:\xAutomation\framework\bin\Debug\System.Net.Http.Formatting.dll
 E:\xAutomation\framework\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
@@ -161,7 +163,6 @@ E:\xAutomation\framework\bin\Debug\System.Web.Http.WebHost.xml
 E:\xAutomation\framework\bin\Debug\System.Web.Razor.xml
 E:\xAutomation\framework\bin\Debug\WebDriver.xml
 E:\xAutomation\framework\bin\Debug\WebDriver.Support.xml
-E:\xAutomation\framework\obj\Debug\SpecflowBDD.csprojAssemblyReference.cache
 E:\xAutomation\framework\obj\Debug\SpecflowBDD.csproj.CoreCompileInputs.cache
 E:\xAutomation\framework\obj\Debug\SpecflowBDD.csproj.CopyComplete
 E:\xAutomation\framework\obj\Debug\BDD Auto.dll

@@ -2,15 +2,16 @@
 using System.Configuration;
 using System.Text;
 using System.Threading;
+using AvidxBDDFramework.Resources;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
 namespace AvidxBDDFramework.Utilities
 {
-
     static class WebUtilities
     {
+        
         public static string ConfigParamValReturn(this string strParamFind)
         {
             return ConfigurationManager.AppSettings["Browser"];
@@ -23,8 +24,16 @@ namespace AvidxBDDFramework.Utilities
 
         public static string getDirPath()
         {
-            string strDebugDir = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
-            string strDirPath = strDebugDir.Replace("\\bin\\Debug\\", "");
+            string strDirPath=null;
+            try
+            {
+                string strDebugDir = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+                strDirPath = strDebugDir.Replace("\\bin\\Debug\\", "");
+                
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
             return strDirPath;
         }
 
@@ -35,8 +44,10 @@ namespace AvidxBDDFramework.Utilities
             return decodedString;
         }
 
-        internal static void selectLtbVal(IWebDriver driver, string listBxVal, string listBxName)
+        internal static void selectLtbVal(IWebDriver iDriver, string listBxVal, string listBxName)
         {
+             AvidPayUIObjects pageObj = new AvidPayUIObjects();
+            
             try
             {
                 if (listBxName.Equals("customer"))
@@ -44,11 +55,14 @@ namespace AvidxBDDFramework.Utilities
                     listBxVal = GenerateTxtFile.customerName;
                     if(listBxVal!=null)
                     {
-                        driver.FindElement(By.XPath("//*[@id='toolbar']//span[@class='k-dropdown-wrap k-state-default']/input")).Clear();
-                        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                        if(pageObj.customerInputObj.Displayed)
+                        {
+                            pageObj.customerInputObj.Clear();
+                            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
-                        driver.FindElement(By.XPath("//*[@id='toolbar']//span[@class='k-dropdown-wrap k-state-default']/input")).SendKeys(listBxVal);
-                        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                            pageObj.customerInputObj.SendKeys(listBxVal);
+                            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                        }
                     }
                     else
                     {
@@ -64,18 +78,24 @@ namespace AvidxBDDFramework.Utilities
 
         internal static void filterPaymentNumber(IWebDriver driver)
         {
+            AvidPayUIObjects pageObj = new AvidPayUIObjects();
             try
             {
-                driver.FindElement(By.XPath("//table/thead/tr/th[@data-title='Payment Number']/a[1]/span")).Click();
-                Thread.Sleep(500);
+                if (pageObj.paymentNumberObj.Displayed)
+                {
+                    pageObj.paymentNumberObj.Click();
+                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(40);
+                    string paymentNo = GenerateTxtFile.checkNo;
 
-                string paymentNo = GenerateTxtFile.checkNo;
-                driver.FindElement(By.XPath("//form/div[1]/input[1]")).SendKeys(paymentNo);
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                    var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
+                    var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.paymentNoInputObj));
 
-                driver.FindElement(By.XPath("//button[text()='Filter']")).Click();
-                Thread.Sleep(1000);
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                    pageObj.paymentNoInputObj.SendKeys(paymentNo);
+                    Thread.Sleep(3000);
+
+                    pageObj.filterButton.Click();
+                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                }
             }
             catch(Exception e)
             {
@@ -86,15 +106,17 @@ namespace AvidxBDDFramework.Utilities
 
         internal static void validateStatus(IWebDriver driver, string vals)
         {
+            AvidPayUIObjects pageObj = new AvidPayUIObjects();
             try
             {
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5000));
-                var myElement = wait.Until(x => x.FindElement(By.XPath("//*[@id='grid']//table/tbody/tr/td[11]")));
-                
-                if (driver.FindElement(By.XPath("//*[@id='grid']//table/tbody/tr/td[11]")).Displayed)
+                //var myElement = wait.Until(x => x.FindElement(By.XPath("//*[@id='grid']//table/tbody/tr/td[11]")));
+                var myElement = wait.Until(x => pageObj.tableRowObj.Displayed);
+
+                if(pageObj.tableRowObj.Displayed)
                 {
-                    string actualStatus = driver.FindElement(By.XPath("//*[@id='grid']//table/tbody/tr/td[11]")).Text;
-                    if (!actualStatus.Equals(vals))
+                    string actualStatus = pageObj.tableRowObj.Text;
+                    if(!actualStatus.Equals(vals))
                     {
                         Assert.Fail("Status is not : " + vals + ", is :" + actualStatus);
                     }
@@ -103,21 +125,32 @@ namespace AvidxBDDFramework.Utilities
                         Console.WriteLine("Status is : " + actualStatus);
                     }
                 }
+
             }catch(Exception e)
             {
                 Assert.Fail("Failed to fetch the status: " +e);
             }
         }
 
-        internal static void enterDatVal(IWebDriver driver, string dateVals)
+        internal static void enterDatVal(IWebDriver iDriver, string dateVals)
         {
+            AvidPayUIObjects pageObj = new AvidPayUIObjects();
             string[] splitDateVal = dateVals.Split(',');
-            driver.FindElement(By.Id("start-date-picker")).Clear();
-            driver.FindElement(By.Id("start-date-picker")).SendKeys(splitDateVal[0]);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            driver.FindElement(By.Id("end-date-picker")).Clear();
-            driver.FindElement(By.Id("end-date-picker")).SendKeys(splitDateVal[1]);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
+            var wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(60));
+            var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.startDateObj));
+
+            pageObj.startDateObj.Click();
+            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+            pageObj.startDateObj.Clear();
+            pageObj.startDateObj.SendKeys(splitDateVal[0]);
+            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+
+            pageObj.endDateObj.Click();
+            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+            pageObj.endDateObj.Clear();
+            pageObj.endDateObj.SendKeys(splitDateVal[1]);
+            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
         }
 
         public class Constants

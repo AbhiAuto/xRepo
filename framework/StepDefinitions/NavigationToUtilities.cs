@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using AvidxBDDFramework.Utilities;
 using System.Net;
 using System.Threading;
+using AvidxBDDFramework.Resources;
+using OpenQA.Selenium.Support.UI;
 
 namespace AvidxBDDFramework
 {
@@ -86,9 +88,12 @@ namespace AvidxBDDFramework
 
         internal static void navToPage(IWebDriver driver, string strPageName)
         {
+            AvidPayUIObjects pageObj = new AvidPayUIObjects();
             if (strPageName.Equals("Manage Payments"))
             {
-                driver.FindElement(By.Id("manage-payments-link")).Click();
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
+                var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.managePayLink));
+                pageObj.managePayLink.Click();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             }
          }

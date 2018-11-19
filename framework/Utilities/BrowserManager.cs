@@ -15,9 +15,8 @@ namespace AvidxBDDFramework.Utilities
     //Initiating the browser which is provided in the testdata config file for browser Key
     class BrowserManager
     {
-        public static IWebDriver driver;
+        public static IWebDriver driver { get; set; }
         public static string dirPath = WebUtilities.getDirPath();
-
 
         public static IWebDriver GetCurrentBrowserDriver()
         {

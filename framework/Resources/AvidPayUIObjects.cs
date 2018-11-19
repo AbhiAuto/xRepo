@@ -1,0 +1,51 @@
+﻿using AvidxBDDFramework.Utilities;
+using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AvidxBDDFramework.Resources
+{
+    class AvidPayUIObjects
+    {
+       
+        public AvidPayUIObjects()
+        {
+            PageFactory.InitElements(BrowserManager.driver, this);
+        }
+
+       
+
+        [FindsBy(How = How.Id, Using = "manage-payments-link")]
+        public IWebElement managePayLink { get; set; }
+
+        [FindsBy(How = How.XPath, Using = "//*[@id='toolbar']//span[@class='k-dropdown-wrap k-state-default']/input")]
+        public IWebElement customerInputObj { get; set; }
+
+        [FindsBy(How = How.XPath, Using = "//table/thead/tr/th[@data-title='Payment Number']/a[1]/span")]
+        public IWebElement paymentNumberObj { get; set; }
+
+        [FindsBy(How = How.XPath, Using = "//form/div[1]/input[1]")]
+        public IWebElement paymentNoInputObj { get; set; }
+
+        [FindsBy(How = How.XPath, Using = "//button[text()='Filter']")]
+        public IWebElement filterButton { get; set; }
+                
+        [FindsBy(How = How.XPath, Using = "//*[@id='grid']//table/tbody/tr/td[11]")]
+        public IWebElement tableRowObj { get; set; }
+
+
+        [FindsBy(How = How.Id, Using = "start-date-picker")]
+        public IWebElement startDateObj { get; set; }
+        [FindsBy(How = How.Id, Using = "end-date-picker")]
+        public IWebElement endDateObj { get; set; }
+       
+    }
+}
+       
+    
+
+ 

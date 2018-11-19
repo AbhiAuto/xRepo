@@ -21,10 +21,12 @@ namespace SpecflowParallelTest
         private static ExtentReports extent;
         private readonly IObjectContainer _objectContainer;
 
-        //To get the current Driver and dir path
-        public static IWebDriver driver;
+        public static IWebDriver driver = BrowserManager.driver;
+
+        //To get the current dir path
         public static string dirPath = WebUtilities.getDirPath();
-        
+
+        public static string test;
         //private RemoteWebDriver _driver;
 
         public Hooks(IObjectContainer objectContainer)
