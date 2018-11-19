@@ -141,16 +141,16 @@ namespace AvidxBDDFramework.Utilities
             var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.startDateObj));
 
             pageObj.startDateObj.Click();
-            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
             pageObj.startDateObj.Clear();
             pageObj.startDateObj.SendKeys(splitDateVal[0]);
-            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
 
             pageObj.endDateObj.Click();
-            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
             pageObj.endDateObj.Clear();
             pageObj.endDateObj.SendKeys(splitDateVal[1]);
-            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
         }
 
         public class Constants
