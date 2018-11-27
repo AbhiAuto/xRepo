@@ -19,3 +19,13 @@ Scenario Outline: 02-Validating ClearStdCheck API for used amount of valid payme
 	Examples: 
 	| payment number | amount |
 	| 4187000084     | 510.00 |
+
+@api
+Scenario Outline: 03-Validating an Error code 401 Unauthorized displays in the API
+	Given I have "ClearStdCheck" api
+	And I have request json with valid '<payment number>' and used '<amount>'
+	When I send a "UnauthorizedPost" request
+	Then the response should be "401"
+	Examples: 
+	| payment number | amount |
+	| 4187000084     | 510.00 |

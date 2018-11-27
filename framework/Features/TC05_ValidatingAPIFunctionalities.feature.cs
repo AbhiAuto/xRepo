@@ -129,6 +129,34 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("03-Validating an Error code 401 Unauthorized displays in the API")]
+        [NUnit.Framework.CategoryAttribute("api")]
+        [NUnit.Framework.TestCaseAttribute("4187000084", "510.00", null)]
+        public virtual void _03_ValidatingAnErrorCode401UnauthorizedDisplaysInTheAPI(string paymentNumber, string amount, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "api"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03-Validating an Error code 401 Unauthorized displays in the API", null, @__tags);
+#line 24
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 25
+ testRunner.Given("I have \"ClearStdCheck\" api", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 26
+ testRunner.And(string.Format("I have request json with valid \'{0}\' and used \'{1}\'", paymentNumber, amount), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 27
+ testRunner.When("I send a \"UnauthorizedPost\" request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 28
+ testRunner.Then("the response should be \"401\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

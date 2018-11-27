@@ -14,6 +14,7 @@ namespace AvidxBDDFramework
     class StepDefinition
     {
         public IWebDriver driver = BrowserManager.GetCurrentBrowserDriver();
+        
 
         [Given(@"I have logged into ""(.*)"" portal")]
         public void GivenIHaveLoggedIntoPortal(string strAppName)
@@ -87,7 +88,14 @@ namespace AvidxBDDFramework
             NavigationToUtilities.navToFTPUtilities(fileExt,"validateFileExt");
         }
 
-       
+        [Then(@"the file extension should not change to""(.*)""")]
+        public void ThenTheFileExtensionShouldNotChangeTo(string p0)
+        {
+        NavigationToUtilities.navToFTPUtilities("", "validateInvfilename");
+        }
+
+
+
         //Step defs for Rest Api
 
         [Given(@"I have ""(.*)"" api")]
@@ -170,8 +178,30 @@ namespace AvidxBDDFramework
             NavigationToUtilities.navToWindowsUtilities(serviceStatus, "servicestatus");
         }
 
+        //Upload an Invalid BAI2 file
+        [When(@"I upload the invalid BAI2 file")]
+        public void WhenIUploadTheInvalidBAIFile()
+        {
+            NavigationToUtilities.navToFTPUtilities("", "Invfilename");
+        }
 
+        //Steps for Validate Payment Amount in the BAI2 file
+        [Given(@"I have genrocket generated BAI2 File")]
+        public void GivenIHaveaBAI2File()
+        {
+            NavigationToUtilities.navToWindowsUtilities("", "ftpGenfileLocation");
+        }
+
+        [When(@"I open the BAI2 file and review Payment Amount")]
+        public void WhenIOpenTheFileAndReviewPaymentAmount()
+        {
+            NavigationToUtilities.navToWindowsUtilities("", "OpenFile");
+        }
+
+        [Then(@"Payment Amount should be greater than zero")]
+        public void ThenPaymentAmountShouldBeGreaterThatZero()
+        {
+        NavigationToUtilities.navToWindowsUtilities("", "ValPayAmount");
+        }
     }
-
-
 }

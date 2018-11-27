@@ -86,6 +86,28 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("02-validating Payment Amount in the generated BAI2 File")]
+        [NUnit.Framework.CategoryAttribute("ftp")]
+        [NUnit.Framework.CategoryAttribute("GenerateBAI2file")]
+        public virtual void _02_ValidatingPaymentAmountInTheGeneratedBAI2File()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02-validating Payment Amount in the generated BAI2 File", null, new string[] {
+                        "ftp",
+                        "GenerateBAI2file"});
+#line 10
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 11
+ testRunner.Given("I have genrocket generated BAI2 File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 12
+ testRunner.When("I open the BAI2 file and review Payment Amount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 13
+ testRunner.Then("Payment Amount should be greater than zero", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

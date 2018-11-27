@@ -143,6 +143,103 @@ namespace AvidxBDDFramework.Utilities
 
         }
 
+
+        //This is for sending a post request
+        private static void unauthorizedPostReq(string jsonData)
+        {
+            try
+            {
+                // Create a request using a URL that can receive a post.   
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strAPIUrl);
+                // Set the Method property of the request to POST.  
+                request.Method = "POST";
+                // Create POST data and convert it to a byte array.  
+                byte[] byteArray = Encoding.UTF8.GetBytes(jsonData);
+                // Set the ContentType property of the WebRequest.  
+                request.ContentType = "application/json";
+                // Set the ContentLength property of the WebRequest.  
+                request.ContentLength = byteArray.Length;
+
+                string username = WebUtilities.fetchParamValFromConfig("username");
+                //Modify the Password
+                string password = ("");
+                //string password = WebUtilities.fetchParamValFromConfig("password");                
+                string dePassword = WebUtilities.decryptString(password);
+                CredentialCache credcache = new CredentialCache();
+                credcache.Add(new Uri(strAPIUrl), "NTLM", new NetworkCredential(username, dePassword));
+                request.Credentials = credcache;
+
+                // Get the request stream.  
+                dataStream = request.GetRequestStream();
+                // Write the data to the request stream.  
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                // Close the Stream object.  
+                dataStream.Close();
+                // Get the response.  
+                response = (HttpWebResponse)request.GetResponse();
+                // Display the status.  
+                Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+                statuscode = ((HttpWebResponse)response).StatusCode;
+                statusCode = (int)statuscode;
+
+                // Get the stream containing content returned by the server.  
+                dataStream = response.GetResponseStream();
+                // Open the stream using a StreamReader for easy access.  
+                StreamReader reader = new StreamReader(dataStream);
+                // Read the content.  
+                string responseFromServer = reader.ReadToEnd();
+                // Display the content.  
+                Console.WriteLine(responseFromServer);
+                // Clean up the streams.  
+                reader.Close();
+                dataStream.Close();
+                response.Close();
+
+                jsonResArray = JArray.Parse(responseFromServer);
+            }
+            catch (WebException webEx)
+            {
+                try
+                {
+                    if (webEx.Response != null)
+                    {
+                        response = (HttpWebResponse)webEx.Response;
+                        statuscode = ((HttpWebResponse)response).StatusCode;
+                        statusCode = (int)statuscode;
+
+                        // Get the stream containing content returned by the server.  
+                        dataStream = response.GetResponseStream();
+                        // Open the stream using a StreamReader for easy access.  
+                        StreamReader reader = new StreamReader(dataStream);
+                        // Read the content.  
+                        string responseFromServer = reader.ReadToEnd();
+                        // Display the content.  
+                        Console.WriteLine(responseFromServer);
+                        // Clean up the streams.  
+                        reader.Close();
+                        dataStream.Close();
+                        response.Close();
+
+                        if (statusCode == 200 || statusCode == 400)
+                        {
+                            jsonResArray = JArray.Parse(responseFromServer);
+                        }
+                        else
+                        {
+                            //jsonResObject = JObject.Parse(responseFromServer);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Assert.Fail("Failed to send the Post request" + e);
+                }
+            }
+
+        }
+
+
+
         internal static void fetchValFromJsonResp(string jsonKey, string exkeyVal)
         {
             try
@@ -207,6 +304,12 @@ namespace AvidxBDDFramework.Utilities
         internal static void sendPostRequest()
         {
             post(reqString);
+        }
+
+        //To call the postman request###
+        internal static void sendUnauthorizedPostReq()
+        {
+            unauthorizedPostReq(reqString);
         }
 
         //To fetch the customer details from Db

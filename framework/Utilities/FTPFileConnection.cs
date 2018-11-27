@@ -14,17 +14,28 @@ namespace AvidxBDDFramework.Utilities
         public static string FTPPath;
         public static string filename;
         public static string destFile;
+        public static string BAI2File, InvBAI2;
         public static bool fileExistsInFTPflag = false;
 
         //Uploading the generated file to FTP server
-        public static void UploadFileToFtp()
+        public static void UploadFileToFtp(string BAI2)
         {
             try
             {
+                var fileName = "";
                 Console.WriteLine("---Uploading File---");
                 //Path where test file stored
                 string sourcePath = dirPath + @"\Resources\FTPFileGenerated\";
-                var fileName = filename + ".txt";
+                //Invalid file to upload
+                if (BAI2 != "Invalid")
+                {
+                    fileName = filename + ".txt";
+                }
+                //Valid file to upload
+                else
+                {
+                    fileName = filename;
+                }
 
                 // Use Path class to manipulate file and directory paths.
                 string sourceFile = System.IO.Path.Combine(sourcePath, fileName);
@@ -69,8 +80,7 @@ namespace AvidxBDDFramework.Utilities
 
                     //get remaining size
                     totalRead = stream.Read(buffer, 0, 1024);
-                }
-
+                }               
                 // Close the streams.
                 fStream.Close();
                 stream.Close();
@@ -83,14 +93,61 @@ namespace AvidxBDDFramework.Utilities
             }
           }
 
+       
+        public static void ValidateFileInFtp(string BAI2)
+        {
+            try
+            {
+                //connect to secure FTP Folder
+                DirectoryInfo directory = new DirectoryInfo(FTPPath);
+                foreach (var file in directory.GetFiles())
+                {
+                    //search for a BAI2 file in the Folder
+                    if (file.ToString().Contains(BAI2))
+                    {
+                        InvBAI2 = file.ToString();
+                        //Delete BAI2 invalid File
+                        file.Delete();
+                        //InvBAI2 =InvBAI2.Substring(InvBAI2.Length - 3);
+                    }
+                    
+                }
+                //If we get a "loaded" text in the string, that means that file is process
+                Assert.IsTrue(!InvBAI2.Contains("loaded"), "BAI2files is processed");
+
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("Unable to conect to FTP folder location: " + e);
+            }
+        }
+
+
         internal static void setftpPath(string ftpPath)
         {
             FTPPath = ftpPath;
         }
+
+        //Set a Valid File
         internal static void setFilename()
         {
             filename = GenerateTxtFile.filenameGen;
-            UploadFileToFtp();
+            BAI2File = "valid";
+            UploadFileToFtp(BAI2File);
+        }
+
+        //Set an Invalid File
+        internal static void setInvFilename()
+        {
+            filename = "BAI2_Invalid.pdf";
+            BAI2File = "Invalid";
+            UploadFileToFtp(BAI2File);
+        }
+
+        internal static void verifyInvFilename()
+        {
+            BAI2File =filename;
+            ValidateFileInFtp(BAI2File);
         }
 
         //Validating the flag when the upload is successful
@@ -102,7 +159,20 @@ namespace AvidxBDDFramework.Utilities
             }
         }
 
-       // validating the file extention after the fileupload is successful
+        //Validating the flag when the upload is successful but not process
+        internal static void valInvalidBAI2File(string ftpval)
+        {
+            if (fileExistsInFTPflag == true)
+            {
+                //needs to add a validation that the
+                DirectoryInfo di = new DirectoryInfo("\\sftp.avidxchange.com\\Avidpaytest\\Integration\\FIFTHTHIRD\\BAI2_AZRFSWDVS02");
+                FileInfo[] files = di.GetFiles("*.pdf");
+                Console.WriteLine("File has uploaded to the FTP location location successfully but not process");
+            }
+        }
+
+
+        // validating the file extention after the fileupload is successful
         internal static void validateFileExt(string ftpval)
         {
             bool flag = false;

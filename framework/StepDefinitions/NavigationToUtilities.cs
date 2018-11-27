@@ -74,7 +74,7 @@ namespace AvidxBDDFramework
             {
                 ftpFileTransfer.setFilename();
             }
-            else if(flag.Equals("validate"))
+            else if(flag.Equals("Validate"))
             {
                 ftpFileTransfer.valUpload(ftpval);
             }
@@ -82,6 +82,15 @@ namespace AvidxBDDFramework
             {
                 ftpFileTransfer.validateFileExt(ftpval);
             }
+            else if (flag.Equals("Invfilename"))
+            {
+                ftpFileTransfer.setInvFilename();
+            }
+            else if (flag.Equals("validateInvfilename"))
+            {
+                ftpFileTransfer.verifyInvFilename();
+            }
+            
         }
 
        
@@ -98,6 +107,11 @@ namespace AvidxBDDFramework
             }
          }
 
+        internal static void validateInvfilename(string v1, string v2)
+        {
+            throw new NotImplementedException();
+        }
+
         internal static void setUrl(string apiName)
         {
             APIUtilities.setApiUrl(apiName);
@@ -113,6 +127,11 @@ namespace AvidxBDDFramework
             if(request.Equals("Post"))
             {
                 APIUtilities.sendPostRequest();
+            }
+            else if(request.Equals("UnauthorizedPost"))
+            {
+                //send Postman Request with wrong Password
+                APIUtilities.sendUnauthorizedPostReq();
             }
         }
 
@@ -181,6 +200,18 @@ namespace AvidxBDDFramework
             else if (flag.Equals("servicestatus"))
             {
                 WindowsUtilities.validateServiceStatus(val);
+            }
+            else if (flag.Equals("OpenFile"))
+            {
+                WindowsUtilities.readTextFile();
+            }
+            else if (flag.Equals("ValPayAmount"))
+            {
+                WindowsUtilities.ValPayAmount();
+            } 
+            else if(flag.Equals("ftpGenfileLocation"))
+            {
+                WindowsUtilities.setftpGenFileLocation();
             }
         }
     }

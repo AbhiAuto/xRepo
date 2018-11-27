@@ -128,6 +128,31 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("04-Uploading an Invalid BAI2 file to security FTP Folder")]
+        [NUnit.Framework.CategoryAttribute("ftp")]
+        [NUnit.Framework.CategoryAttribute("InvalidBAI2file")]
+        public virtual void _04_UploadingAnInvalidBAI2FileToSecurityFTPFolder()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04-Uploading an Invalid BAI2 file to security FTP Folder", null, new string[] {
+                        "ftp",
+                        "InvalidBAI2file"});
+#line 20
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 21
+ testRunner.Given("FTP folder location \"\\\\sftp.avidxchange.com\\Avidpaytest\\Integration\\FIFTHTHIRD\\BA" +
+                    "I2_AZRFSWDVS02\\\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 22
+ testRunner.When("I upload the invalid BAI2 file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 23
+ testRunner.And("the user waits for \"70\" seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 24
+ testRunner.Then("the file extension should not change to\".loaded\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

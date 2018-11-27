@@ -1,1 +1,1 @@
-To store the generated BAI2 File
+To store the generated BAI2 file

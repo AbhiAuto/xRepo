@@ -15,3 +15,10 @@ Scenario: 03-Validating database status change to 27
 	Given I have AvidPayTransaction database
 	When  I query for "PaymentProcessingStatusTypeID" status
 	Then I should see the status as "27"
+
+@ftp @InvalidBAI2file
+Scenario: 04-Uploading an Invalid BAI2 file to security FTP Folder
+	Given FTP folder location "\\sftp.avidxchange.com\Avidpaytest\Integration\FIFTHTHIRD\BAI2_AZRFSWDVS02\"
+	When I upload the invalid BAI2 file
+	And the user waits for "70" seconds
+	Then the file extension should not change to".loaded"
