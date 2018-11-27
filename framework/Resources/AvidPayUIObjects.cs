@@ -25,7 +25,7 @@ namespace AvidxBDDFramework.Resources
         [FindsBy(How = How.XPath, Using = "//*[@id='toolbar']//span[@class='k-dropdown-wrap k-state-default']/input")]
         public IWebElement customerInputObj { get; set; }
 
-        [FindsBy(How = How.XPath, Using = "//table/thead/tr/th[@data-title='Payment Number']/a[1]/span")]
+        [FindsBy(How = How.XPath, Using = "//table/thead/tr/th[@data-title='Payment Number']/a[@class='k-grid-filter']")]
         public IWebElement paymentNumberObj { get; set; }
 
         [FindsBy(How = How.XPath, Using = "//form/div[1]/input[1]")]
