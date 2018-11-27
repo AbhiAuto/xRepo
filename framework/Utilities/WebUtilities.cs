@@ -83,17 +83,17 @@ namespace AvidxBDDFramework.Utilities
             {
                 if (pageObj.paymentNumberObj.Displayed)
                 {
+                    
                     pageObj.paymentNumberObj.Click();
+
                     driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(40);
                     string paymentNo = GenerateTxtFile.checkNo;
 
-                    var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
-                    var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.paymentNoInputObj));
-
-                    Thread.Sleep(2000);
+                    //var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
+                    //var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.paymentNoInputObj));
+                    Thread.Sleep(3000);
                     pageObj.paymentNoInputObj.SendKeys(paymentNo);
                     Thread.Sleep(3000);
-
                     pageObj.filterButton.Click();
                     Thread.Sleep(3000);
                     driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
