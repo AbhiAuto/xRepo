@@ -144,9 +144,7 @@ namespace AvidxBDDFramework.Utilities
                 string[] splitDateVal = dateVals.Split(',');
 
                 Thread.Sleep(2000);
-                var wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(60));
-                var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.startDateObj));
-
+                
                 pageObj.startDateObj.Click();
                 iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
                 pageObj.startDateObj.Clear();
