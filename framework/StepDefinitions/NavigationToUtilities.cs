@@ -102,15 +102,11 @@ namespace AvidxBDDFramework
             {
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
                 var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.managePayLink));
+                Thread.Sleep(1000);
                 pageObj.managePayLink.Click();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             }
          }
-
-        internal static void validateInvfilename(string v1, string v2)
-        {
-            throw new NotImplementedException();
-        }
 
         internal static void setUrl(string apiName)
         {
