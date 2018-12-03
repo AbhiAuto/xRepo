@@ -97,15 +97,21 @@ namespace AvidxBDDFramework
 
         internal static void navToPage(IWebDriver driver, string strPageName)
         {
-            AvidPayUIObjects pageObj = new AvidPayUIObjects();
-            if (strPageName.Equals("Manage Payments"))
+            try
             {
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
-                var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.managePayLink));
-                Thread.Sleep(3000);
-                pageObj.managePayLink.Click();
-                Console.WriteLine("Clicked on manage payments link");
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                AvidPayUIObjects pageObj = new AvidPayUIObjects();
+                if (strPageName.Equals("Manage Payments"))
+                {
+                    Thread.Sleep(3000);
+                    var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(120));
+                    var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.managePayLink));
+                    pageObj.managePayLink.Click();
+                    Console.WriteLine("Clicked on manage payments link");
+                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                }
+            }catch(Exception e)
+            {
+                Assert.Fail("Failed to click on manage payment link. Please find more details : " + e);
             }
          }
 

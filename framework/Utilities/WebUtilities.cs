@@ -138,24 +138,30 @@ namespace AvidxBDDFramework.Utilities
 
         internal static void enterDatVal(IWebDriver iDriver, string dateVals)
         {
-            AvidPayUIObjects pageObj = new AvidPayUIObjects();
-            string[] splitDateVal = dateVals.Split(',');
+            try
+            {
+                AvidPayUIObjects pageObj = new AvidPayUIObjects();
+                string[] splitDateVal = dateVals.Split(',');
 
-            Thread.Sleep(1000);
-            var wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(60));
-            var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.startDateObj));
+                Thread.Sleep(1000);
+                var wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(60));
+                var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.startDateObj));
 
-            pageObj.startDateObj.Click();
-            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
-            pageObj.startDateObj.Clear();
-            pageObj.startDateObj.SendKeys(splitDateVal[0]);
-            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
+                pageObj.startDateObj.Click();
+                iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
+                pageObj.startDateObj.Clear();
+                pageObj.startDateObj.SendKeys(splitDateVal[0]);
+                iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
 
-            pageObj.endDateObj.Click();
-            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
-            pageObj.endDateObj.Clear();
-            pageObj.endDateObj.SendKeys(splitDateVal[1]);
-            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
+                pageObj.endDateObj.Click();
+                iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
+                pageObj.endDateObj.Clear();
+                pageObj.endDateObj.SendKeys(splitDateVal[1]);
+                iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
+            }catch(Exception e)
+            {
+                Assert.Fail("Failed to enter the date. Please find more details: " + e);
+            }
         }
 
         public class Constants
