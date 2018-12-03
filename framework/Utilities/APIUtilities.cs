@@ -178,9 +178,10 @@ namespace AvidxBDDFramework.Utilities
                 // Get the response.  
                 response = (HttpWebResponse)request.GetResponse();
                 // Display the status.  
-                Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+                //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
                 statuscode = ((HttpWebResponse)response).StatusCode;
                 statusCode = (int)statuscode;
+                Console.WriteLine(statusCode);
 
                 // Get the stream containing content returned by the server.  
                 dataStream = response.GetResponseStream();
@@ -206,7 +207,7 @@ namespace AvidxBDDFramework.Utilities
                         response = (HttpWebResponse)webEx.Response;
                         statuscode = ((HttpWebResponse)response).StatusCode;
                         statusCode = (int)statuscode;
-
+                        Console.WriteLine(statusCode);
                         // Get the stream containing content returned by the server.  
                         dataStream = response.GetResponseStream();
                         // Open the stream using a StreamReader for easy access.  
@@ -214,7 +215,7 @@ namespace AvidxBDDFramework.Utilities
                         // Read the content.  
                         string responseFromServer = reader.ReadToEnd();
                         // Display the content.  
-                        Console.WriteLine(responseFromServer);
+                        //Console.WriteLine(responseFromServer);
                         // Clean up the streams.  
                         reader.Close();
                         dataStream.Close();
