@@ -143,7 +143,7 @@ namespace AvidxBDDFramework.Utilities
                 AvidPayUIObjects pageObj = new AvidPayUIObjects();
                 string[] splitDateVal = dateVals.Split(',');
 
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 var wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(60));
                 var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.startDateObj));
 
@@ -152,6 +152,7 @@ namespace AvidxBDDFramework.Utilities
                 pageObj.startDateObj.Clear();
                 pageObj.startDateObj.SendKeys(splitDateVal[0]);
                 iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
+                Thread.Sleep(2000);
 
                 pageObj.endDateObj.Click();
                 iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
@@ -162,15 +163,6 @@ namespace AvidxBDDFramework.Utilities
             {
                 Assert.Fail("Failed to enter the date. Please find more details: " + e);
             }
-        }
-
-        public class Constants
-        {
-            public const int ImplicitWaitTime = 20;
-            public const int PageLoadWaitTime = 90;
-            public const int DefaultWaitInSeconds = 5;
-            public const int DefaultPollingWaitInMilliSeconds = 200;
-
         }
 
     }
