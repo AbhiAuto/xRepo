@@ -102,7 +102,7 @@ namespace AvidxBDDFramework
                 AvidPayUIObjects pageObj = new AvidPayUIObjects();
                 if (strPageName.Equals("Manage Payments"))
                 {
-                    Thread.Sleep(3000);
+                    Thread.Sleep(5000);
                     var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(120));
                     var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.managePayLink));
                     pageObj.managePayLink.Click();
