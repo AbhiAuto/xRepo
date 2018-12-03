@@ -62,9 +62,7 @@ namespace AvidxBDDFramework.Utilities
 
                             pageObj.customerInputObj.SendKeys(listBxVal);
                             iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-
-                            pageObj.customerInputObj.SendKeys(Keys.Tab);
-                            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                            Thread.Sleep(1000);
 
                         }
                     }
