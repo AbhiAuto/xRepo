@@ -62,6 +62,10 @@ namespace AvidxBDDFramework.Utilities
 
                             pageObj.customerInputObj.SendKeys(listBxVal);
                             iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
+                            pageObj.customerInputObj.SendKeys(Keys.Tab);
+                            iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
                         }
                     }
                     else
@@ -139,6 +143,7 @@ namespace AvidxBDDFramework.Utilities
             AvidPayUIObjects pageObj = new AvidPayUIObjects();
             string[] splitDateVal = dateVals.Split(',');
 
+            Thread.Sleep(1000);
             var wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(60));
             var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.startDateObj));
 
