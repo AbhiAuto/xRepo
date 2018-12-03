@@ -32,12 +32,14 @@ namespace AvidxBDDFramework
         public void GivenISelectTheCustomerFromCustomerListbox(string listBxName)
         {
             NavigationToUtilities.navToObjUtilities(driver,"", listBxName);
+            Console.WriteLine("-----Selected customer----");
         }
 
         [Given(@"I enter ""(.*)"" in the date feilds")]
         public void GivenIEnterInDateFeilds(string dateVals)
         {
             NavigationToUtilities.navToUtilities(driver, dateVals,"Dates");
+            Console.WriteLine("-----Entered date values----");
         }
 
         [When(@"I filter the result with the payment number")]
