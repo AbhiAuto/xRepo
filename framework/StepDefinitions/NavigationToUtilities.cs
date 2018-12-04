@@ -28,6 +28,7 @@ namespace AvidxBDDFramework
                 //Navigating to base page
                 driver.Url = baseUrl;
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                Thread.Sleep(3000);
             }
             catch (Exception e)
             {
@@ -102,13 +103,10 @@ namespace AvidxBDDFramework
                 AvidPayUIObjects pageObj = new AvidPayUIObjects();
                 if (strPageName.Equals("Manage Payments"))
                 {
-
-                    var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5000));
-                    var myElement = wait.Until(x => pageObj.managePayLink.Displayed);
-                  
                     pageObj.managePayLink.Click();
                     Console.WriteLine("Clicked on manage payments link");
                     driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                    Thread.Sleep(5000);
                 }
             }catch(Exception e)
             {

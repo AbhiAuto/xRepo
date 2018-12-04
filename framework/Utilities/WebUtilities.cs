@@ -46,7 +46,7 @@ namespace AvidxBDDFramework.Utilities
 
         internal static void selectLtbVal(IWebDriver iDriver, string listBxVal, string listBxName)
         {
-             AvidPayUIObjects pageObj = new AvidPayUIObjects();
+            AvidPayUIObjects pageObj = new AvidPayUIObjects();
             
             try
             {
@@ -63,7 +63,6 @@ namespace AvidxBDDFramework.Utilities
                             pageObj.customerInputObj.SendKeys(listBxVal);
                             iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                             Thread.Sleep(1000);
-
                         }
                     }
                     else
@@ -145,9 +144,6 @@ namespace AvidxBDDFramework.Utilities
                 
                 Thread.Sleep(5000);
 
-                if (pageObj.startDateObj.Displayed)
-                {
-                   
                     pageObj.startDateObj.Click();
                     iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
                     pageObj.startDateObj.Clear();
@@ -161,7 +157,6 @@ namespace AvidxBDDFramework.Utilities
                     pageObj.endDateObj.SendKeys(splitDateVal[1]);
                     iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
                     Thread.Sleep(5000);
-                }
             }
             catch (TimeoutException te)
             {
