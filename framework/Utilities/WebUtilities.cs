@@ -61,7 +61,7 @@ namespace AvidxBDDFramework.Utilities
                             iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
                             pageObj.customerInputObj.SendKeys(listBxVal);
-                            Thread.Sleep(5000);
+                            Thread.Sleep(8000);
                             pageObj.customerInputObj.SendKeys(Keys.Enter);
                             iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                             Thread.Sleep(5000);
@@ -143,17 +143,17 @@ namespace AvidxBDDFramework.Utilities
             {
                 AvidPayUIObjects pageObj = new AvidPayUIObjects();
                 string[] splitDateVal = dateVals.Split(',');
-                Thread.Sleep(6000);
+                Thread.Sleep(3000);
 
                 pageObj.startDateObj.Clear();
-                Thread.Sleep(5000);
+                Thread.Sleep(8000);
                 pageObj.startDateObj.SendKeys(splitDateVal[0]);
                 Console.WriteLine("Entered start date");
                 iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
-                Thread.Sleep(5000);
+                Thread.Sleep(8000);
 
                 pageObj.endDateObj.Clear();
-                Thread.Sleep(5000);
+                Thread.Sleep(8000);
                 pageObj.endDateObj.SendKeys(splitDateVal[1]);
                 Console.WriteLine("Entered end date");
                 iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
