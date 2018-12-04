@@ -103,6 +103,7 @@ namespace AvidxBDDFramework
                 AvidPayUIObjects pageObj = new AvidPayUIObjects();
                 if (strPageName.Equals("Manage Payments"))
                 {
+                    Thread.Sleep(5000);
                     pageObj.managePayLink.Click();
                     Console.WriteLine("Clicked on manage payments link");
                     driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
