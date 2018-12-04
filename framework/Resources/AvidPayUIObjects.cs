@@ -1,11 +1,7 @@
 ﻿using AvidxBDDFramework.Utilities;
 using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace AvidxBDDFramework.Resources
 {
@@ -35,11 +31,10 @@ namespace AvidxBDDFramework.Resources
         [FindsBy(How = How.XPath, Using = "//*[@id='grid']//table/tbody/tr/td[11]")]
         public IWebElement tableRowObj { get; set; }
 
-
-        [FindsBy(How = How.Name, Using = "start-date-picker")]
+        [FindsBy(How = How.XPath, Using = "(//input[@data-role='datepicker'])[1]")]
         public IWebElement startDateObj { get; set; }
 
-        [FindsBy(How = How.Name, Using = "end-date-picker")]
+        [FindsBy(How = How.XPath, Using = "(//input[@data-role='datepicker'])[2]")]
         public IWebElement endDateObj { get; set; }
        
     }
