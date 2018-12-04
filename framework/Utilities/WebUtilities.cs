@@ -149,8 +149,6 @@ namespace AvidxBDDFramework.Utilities
                 {
                     var wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(240));
                     var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.startDateObj));
-                    wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(240));
-                    clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.endDateObj));
                     
                     pageObj.startDateObj.Click();
                     iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
@@ -158,6 +156,9 @@ namespace AvidxBDDFramework.Utilities
                     pageObj.startDateObj.SendKeys(splitDateVal[0]);
                     iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
                     Thread.Sleep(1000);
+
+                    wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(240));
+                    clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.endDateObj));
 
                     pageObj.endDateObj.Click();
                     iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
