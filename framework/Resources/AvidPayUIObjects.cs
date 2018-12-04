@@ -38,9 +38,10 @@ namespace AvidxBDDFramework.Resources
         public IWebElement tableRowObj { get; set; }
 
 
-        [FindsBy(How = How.Id, Using = "start-date-picker")]
+        [FindsBy(How = How.Name, Using = "start-date-picker")]
         public IWebElement startDateObj { get; set; }
-        [FindsBy(How = How.Id, Using = "end-date-picker")]
+
+        [FindsBy(How = How.Name, Using = "end-date-picker")]
         public IWebElement endDateObj { get; set; }
        
     }
