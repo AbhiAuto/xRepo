@@ -144,15 +144,15 @@ namespace AvidxBDDFramework.Utilities
                 
                 Thread.Sleep(5000);
 
-                    pageObj.startDateObj.Click();
-                    iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
+                    //pageObj.startDateObj.Click();
+                    //iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
                     pageObj.startDateObj.Clear();
                     pageObj.startDateObj.SendKeys(splitDateVal[0]);
                     iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
                     Thread.Sleep(5000);
 
-                    pageObj.endDateObj.Click();
-                    iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
+                    //pageObj.endDateObj.Click();
+                    //iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
                     pageObj.endDateObj.Clear();
                     pageObj.endDateObj.SendKeys(splitDateVal[1]);
                     iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
