@@ -143,28 +143,24 @@ namespace AvidxBDDFramework.Utilities
                 AvidPayUIObjects pageObj = new AvidPayUIObjects();
                 string[] splitDateVal = dateVals.Split(',');
                 
-                Thread.Sleep(1000);
+                Thread.Sleep(5000);
 
                 if (pageObj.startDateObj.Displayed)
                 {
-                    var wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(240));
-                    var clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.startDateObj));
-                    
+                   
                     pageObj.startDateObj.Click();
                     iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
                     pageObj.startDateObj.Clear();
                     pageObj.startDateObj.SendKeys(splitDateVal[0]);
                     iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
-                    Thread.Sleep(1000);
-
-                    wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(240));
-                    clickableElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(pageObj.endDateObj));
+                    Thread.Sleep(5000);
 
                     pageObj.endDateObj.Click();
                     iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
                     pageObj.endDateObj.Clear();
                     pageObj.endDateObj.SendKeys(splitDateVal[1]);
                     iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
+                    Thread.Sleep(5000);
                 }
             }
             catch (TimeoutException te)
