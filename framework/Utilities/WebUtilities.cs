@@ -142,25 +142,17 @@ namespace AvidxBDDFramework.Utilities
                 AvidPayUIObjects pageObj = new AvidPayUIObjects();
                 string[] splitDateVal = dateVals.Split(',');
                 
+                pageObj.startDateObj.Clear();
+                pageObj.startDateObj.SendKeys(splitDateVal[0]);
+                Console.WriteLine("Entered start date");
+                iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
                 Thread.Sleep(5000);
 
-                    //pageObj.startDateObj.Click();
-                    //iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
-                    pageObj.startDateObj.Clear();
-                    pageObj.startDateObj.SendKeys(splitDateVal[0]);
-                    iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
-                    Thread.Sleep(5000);
-
-                    //pageObj.endDateObj.Click();
-                    //iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
-                    pageObj.endDateObj.Clear();
-                    pageObj.endDateObj.SendKeys(splitDateVal[1]);
-                    iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
-                    Thread.Sleep(5000);
-            }
-            catch (TimeoutException te)
-            {
-                Assert.Fail("Failed to enter the date. Please find more details: " + te);
+                pageObj.endDateObj.Clear();
+                pageObj.endDateObj.SendKeys(splitDateVal[1]);
+                Console.WriteLine("Entered end date");
+                iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
+                Thread.Sleep(5000);
             }
             catch (Exception e)
             {

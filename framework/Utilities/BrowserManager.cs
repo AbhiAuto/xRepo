@@ -40,7 +40,7 @@ namespace AvidxBDDFramework.Utilities
                 {
                     case "Firefox":
 
-                        driver = getFirefoxDriver();
+                       // driver = getFirefoxDriver();
                         break;
 
                     case "IE":
@@ -97,7 +97,6 @@ namespace AvidxBDDFramework.Utilities
             if (driver != null)
             {
                 driver.Quit();
-                driver.Dispose();
                 driver = null;
             }
             BrowserManager.driver = null;
@@ -120,9 +119,9 @@ namespace AvidxBDDFramework.Utilities
         }
 
         //To intiate firefox browser
-        public static IWebDriver getFirefoxDriver()
-        {
-            throw new NotImplementedException();
-        }
+        //public static IWebDriver getFirefoxDriver()
+        //{
+        //    //throw new NotImplementedException();
+        //}
     }
 }
