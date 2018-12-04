@@ -17,12 +17,10 @@ namespace AvidxBDDFramework.Resources
             PageFactory.InitElements(BrowserManager.driver, this);
         }
 
-       
-
         [FindsBy(How = How.Id, Using = "manage-payments-link")]
         public IWebElement managePayLink { get; set; }
 
-        [FindsBy(How = How.XPath, Using = "//*[@id='toolbar']//span[@class='k-dropdown-wrap k-state-default']/input")]
+        [FindsBy(How = How.XPath, Using = "//*[@id='toolbar']//span/input[@placeholder='Select customer']")]
         public IWebElement customerInputObj { get; set; }
 
         [FindsBy(How = How.XPath, Using = "//table/thead/tr/th[@data-title='Payment Number']/a[@class='k-grid-filter']")]
