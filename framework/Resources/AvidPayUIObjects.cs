@@ -31,10 +31,10 @@ namespace AvidxBDDFramework.Resources
         [FindsBy(How = How.XPath, Using = "//*[@id='grid']//table/tbody/tr/td[11]")]
         public IWebElement tableRowObj { get; set; }
 
-        [FindsBy(How = How.XPath, Using = "(//input[@data-role='datepicker'])[1]")]
+        [FindsBy(How = How.Id, Using = "start-date-picker")]
         public IWebElement startDateObj { get; set; }
 
-        [FindsBy(How = How.XPath, Using = "(//input[@data-role='datepicker'])[2]")]
+        [FindsBy(How = How.Id, Using = "end-date-picker")]
         public IWebElement endDateObj { get; set; }
        
     }

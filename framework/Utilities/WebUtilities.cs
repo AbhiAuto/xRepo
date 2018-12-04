@@ -146,12 +146,14 @@ namespace AvidxBDDFramework.Utilities
                 Thread.Sleep(6000);
 
                 pageObj.startDateObj.Clear();
+                Thread.Sleep(5000);
                 pageObj.startDateObj.SendKeys(splitDateVal[0]);
                 Console.WriteLine("Entered start date");
                 iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
                 Thread.Sleep(5000);
 
                 pageObj.endDateObj.Clear();
+                Thread.Sleep(5000);
                 pageObj.endDateObj.SendKeys(splitDateVal[1]);
                 Console.WriteLine("Entered end date");
                 iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
