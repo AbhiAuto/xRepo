@@ -9,6 +9,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace AvidxBDDFramework.Utilities
 {
+    
     static class WebUtilities
     {
         
@@ -113,6 +114,7 @@ namespace AvidxBDDFramework.Utilities
             AvidPayUIObjects pageObj = new AvidPayUIObjects();
             try
             {
+                Thread.Sleep(20000);
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5000));
                 //var myElement = wait.Until(x => x.FindElement(By.XPath("//*[@id='grid']//table/tbody/tr/td[11]")));
                 var myElement = wait.Until(x => pageObj.tableRowObj.Displayed);
@@ -151,7 +153,6 @@ namespace AvidxBDDFramework.Utilities
                 Console.WriteLine("Entered start date");
 
                 Thread.Sleep(1000);
-                pageObj.startDateObj.SendKeys(Keys.Enter);
                 iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
 
                 pageObj.endDateObj.Click();
