@@ -61,6 +61,7 @@ namespace AvidxBDDFramework.Utilities
                             iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
                             pageObj.customerInputObj.SendKeys(listBxVal);
+                            pageObj.customerInputObj.SendKeys(Keys.Enter);
                         }
                     }
                     else
@@ -137,6 +138,9 @@ namespace AvidxBDDFramework.Utilities
         {
             try
             {
+                var wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(5000));
+                var myElement = wait.Until(x => x.FindElement(By.XPath("//*[@id='grid']/div[3]/table/tbody")).Displayed);
+                                
                 AvidPayUIObjects pageObj = new AvidPayUIObjects();
                 string[] splitDateVal = dateVals.Split(',');
                 pageObj.startDateObj.Click();
