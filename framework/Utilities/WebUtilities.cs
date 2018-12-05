@@ -114,7 +114,7 @@ namespace AvidxBDDFramework.Utilities
             AvidPayUIObjects pageObj = new AvidPayUIObjects();
             try
             {
-                Thread.Sleep(20000);
+                Thread.Sleep(60000);
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5000));
                 //var myElement = wait.Until(x => x.FindElement(By.XPath("//*[@id='grid']//table/tbody/tr/td[11]")));
                 var myElement = wait.Until(x => pageObj.tableRowObj.Displayed);
