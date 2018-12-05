@@ -190,7 +190,7 @@ namespace AvidxBDDFramework.Utilities
                 // Read the content.  
                 string responseFromServer = reader.ReadToEnd();
                 // Display the content.  
-                Console.WriteLine(responseFromServer);
+                //Console.WriteLine(responseFromServer);
                 // Clean up the streams.  
                 reader.Close();
                 dataStream.Close();
