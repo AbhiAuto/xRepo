@@ -145,19 +145,42 @@ namespace AvidxBDDFramework.Utilities
                 string[] splitDateVal = dateVals.Split(',');
                 Thread.Sleep(3000);
 
-                pageObj.startDateObj.Clear();
-                Thread.Sleep(8000);
-                pageObj.startDateObj.SendKeys(splitDateVal[0]);
-                Console.WriteLine("Entered start date");
-                iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
-                Thread.Sleep(8000);
+                var wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(5000));
+                var myElement = wait.Until(x => x.FindElement(By.Id("start-date-picker")));
+                iDriver.FindElement(By.Id("start-date-picker")).Click();
 
-                pageObj.endDateObj.Clear();
-                Thread.Sleep(8000);
-                pageObj.endDateObj.SendKeys(splitDateVal[1]);
-                Console.WriteLine("Entered end date");
-                iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
-                Thread.Sleep(5000);
+                wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(5000));
+                myElement = wait.Until(x => x.FindElement(By.Id("start-date-picker")));
+                iDriver.FindElement(By.Id("start-date-picker")).Clear();
+
+                wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(5000));
+                myElement = wait.Until(x => x.FindElement(By.Id("start-date-picker")));
+                iDriver.FindElement(By.Id("start-date-picker")).SendKeys(splitDateVal[0]);
+
+                wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(5000));
+                myElement = wait.Until(x => x.FindElement(By.Id("end-date-picker")));
+                iDriver.FindElement(By.Id("end-date-picker")).Click();
+
+                wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(5000));
+                myElement = wait.Until(x => x.FindElement(By.Id("end-date-picker")));
+                iDriver.FindElement(By.Id("end-date-picker")).Clear();
+
+                wait = new WebDriverWait(iDriver, TimeSpan.FromSeconds(5000));
+                myElement = wait.Until(x => x.FindElement(By.Id("end-date-picker")));
+                iDriver.FindElement(By.Id("end-date-picker")).SendKeys(splitDateVal[1]);
+
+                //pageObj.startDateObj.Click();
+                //pageObj.startDateObj.SendKeys(splitDateVal[0]);
+                //Console.WriteLine("Entered start date");
+                //iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
+                //Thread.Sleep(8000);
+
+                //pageObj.endDateObj.Clear();
+                //Thread.Sleep(8000);
+                //pageObj.endDateObj.SendKeys(splitDateVal[1]);
+                //Console.WriteLine("Entered end date");
+                //iDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
+                //Thread.Sleep(5000);
             }
             catch (Exception e)
             {
