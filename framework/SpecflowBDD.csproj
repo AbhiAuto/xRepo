@@ -154,20 +154,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Features\TC04_ValidatingUIScreen-API.feature.cs">
+    <Compile Include="Features\TC03_ValidatingUIScreen-API.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TC04_ValidatingUIScreen-API.feature</DependentUpon>
+      <DependentUpon>TC03_ValidatingUIScreen-API.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\TC03_ValidatingUIScreen-Genfile.feature.cs">
-      <DependentUpon>TC03_ValidatingUIScreen-Genfile.feature</DependentUpon>
+    <Compile Include="Features\TC05_ValidatingUIScreen-Genfile.feature.cs">
+      <DependentUpon>TC05_ValidatingUIScreen-Genfile.feature</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Features\TC05_ValidatingAPIFunctionalities.feature.cs">
+    <Compile Include="Features\TC04_ValidatingAPIFunctionalities.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TC05_ValidatingAPIFunctionalities.feature</DependentUpon>
+      <DependentUpon>TC04_ValidatingAPIFunctionalities.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\TC02_ValidatingDatabase.feature.cs">
       <AutoGen>True</AutoGen>
@@ -202,17 +202,17 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Features\TC04_ValidatingUIScreen-API.feature">
+    <None Include="Features\TC03_ValidatingUIScreen-API.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>TC04_ValidatingUIScreen-API.feature.cs</LastGenOutput>
+      <LastGenOutput>TC03_ValidatingUIScreen-API.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\TC03_ValidatingUIScreen-Genfile.feature">
+    <None Include="Features\TC05_ValidatingUIScreen-Genfile.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>TC03_ValidatingUIScreen-Genfile.feature.cs</LastGenOutput>
+      <LastGenOutput>TC05_ValidatingUIScreen-Genfile.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\TC05_ValidatingAPIFunctionalities.feature">
+    <None Include="Features\TC04_ValidatingAPIFunctionalities.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>TC05_ValidatingAPIFunctionalities.feature.cs</LastGenOutput>
+      <LastGenOutput>TC04_ValidatingAPIFunctionalities.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\TC02_ValidatingDatabase.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
